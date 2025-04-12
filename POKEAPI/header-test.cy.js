@@ -23,4 +23,13 @@ describe("Automate API with Pokeapi",()=>{
         cy.request("https://pokeapi.co/api/v2/pokemon/ditto").as("pokemos")
         cy.get("@pokemos").its("body").should("include",{name: "ditto"})
     });
+
+    it('successfully validate negative response', () => {
+        cy.request({
+            method : "GET",
+            url : "https://pokeapi.co/api/v2/pokemon/enjoy",
+            failOnStatusCode: false
+        }).as("enjoy")
+        cy.get("@enjoy").its("status").should("equal",404)
+    });
 })
